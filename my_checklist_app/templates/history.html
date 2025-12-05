@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Historical Checklists{% endblock %}
+
+{% block content %}
+    <h1>Historical Checklists</h1>
+
+    <form action="/history" method="get" class="date-form">
+        <label for="view_date">View Checklist for Date:</label>
+        <input type="date" id="view_date" name="view_date" value="{{ selected_date if selected_date else '' }}">
+        <button type="submit">View</button>
+    </form>
+
+    {% if historical_record %}
+        <h2>Checklist for {{ selected_date }}</h2>
+        {% if historical_record['completed'] %}
+            <h3>Completed Tasks</h3>
+            <ul class="task-list completed-list">
+                {% for task in historical_record['completed'] %}
+                    <li>{{ task }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No completed tasks for this date.</p>
+        {% endif %}
+
+        {% if historical_record['incomplete'] %}
+            <h3>Incomplete Tasks</h3>
+            <ul class="task-list incomplete-list">
+                {% for task in historical_record['incomplete'] %}
+                    <li>{{ task }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No incomplete tasks for this date.</p>
+        {% endif %}
+    {% elif selected_date %}
+        <p>No checklist found for date: {{ selected_date }}.</p>
+    {% else %}
+        <p>Please select a date to view its checklist.</p>
+    {% endif %}
+
+    <hr>
+    <div class="navigation-links">
+        <a href="/" class="btn">Back to Current Daily Checklist</a>
+    </div>
+{% endblock %}
