@@ -1,0 +1,119 @@
+<!--
+Reference: /mnt/data/Prompt Engineering Presentation AG-2.pdf
+This is the single-page frontend for the Task Manager.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body class="light">
+  <!-- Top bar with theme toggle -->
+  <div class="topbar">
+    <div class="title-box">
+      <!-- Huge TASK MANAGER inside a dark blue big box -->
+      <h1 class="main-title">TASK MANAGER</h1>
+      <!-- Progress bar under big title box -->
+      <div class="progress-wrap">
+        <div class="progress-label">Progress</div>
+        <div id="progress" class="progress-bar">
+          <div id="progress-fill" class="progress-fill" style="width:0%"></div>
+        </div>
+        <div id="progress-percent" class="progress-percent">0%</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <!-- Theme toggle (top-right) with gold sun and white moon -->
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <!-- Gold sun icon -->
+        <svg id="sun-icon" class="icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" fill="#D4AF37"></circle>
+          <!-- sun rays -->
+          <g stroke="#D4AF37" stroke-width="1.2">
+            <line x1="12" y1="1" x2="12" y2="4"></line>
+            <line x1="12" y1="20" x2="12" y2="23"></line>
+            <line x1="1" y1="12" x2="4" y2="12"></line>
+            <line x1="20" y1="12" x2="23" y2="12"></line>
+            <line x1="4" y1="4" x2="6" y2="6"></line>
+            <line x1="18" y1="18" x2="20" y2="20"></line>
+            <line x1="4" y1="20" x2="6" y2="18"></line>
+            <line x1="18" y1="6" x2="20" y2="4"></line>
+          </g>
+        </svg>
+
+        <!-- White moon icon -->
+        <svg id="moon-icon" class="icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="#ffffff"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search + Sort -->
+  <div class="search-sort">
+    <input id="search-input" type="text" placeholder="Search tasks..." />
+    <select id="sort-select" title="Sort tasks">
+      <option value="created_desc">Sort: Newest</option>
+      <option value="created_asc">Sort: Oldest</option>
+      <option value="deadline_asc">Sort: Deadline ↑</option>
+      <option value="deadline_desc">Sort: Deadline ↓</option>
+      <option value="priority_desc">Sort: Priority (High → Low)</option>
+      <option value="priority_asc">Sort: Priority (Low → High)</option>
+      <option value="title_asc">Sort: Title A→Z</option>
+      <option value="title_desc">Sort: Title Z→A</option>
+    </select>
+  </div>
+
+  <!-- Task Input Box -->
+  <div class="task-input">
+    <input id="task-title" type="text" placeholder="Title (required)" maxlength="100" />
+    <textarea id="task-desc" placeholder="Description (optional, up to 200 chars)" maxlength="200"></textarea>
+
+    <div class="row">
+      <div class="field">
+        <label for="task-priority">Priority</label>
+        <select id="task-priority">
+          <option>Low</option>
+          <option selected>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="task-deadline">Deadline</label>
+        <input id="task-deadline" type="datetime-local" />
+      </div>
+
+      <div class="field actions">
+        <button id="add-task-btn" class="primary">Add Task</button>
+        <button id="cancel-edit-btn" class="muted hidden">Cancel Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columns: Incomplete | In Progress | Completed -->
+  <div class="columns">
+    <div class="column" data-status="incomplete">
+      <h2 class="col-header">Incomplete</h2>
+      <div id="col-incomplete" class="col-list"></div>
+    </div>
+
+    <div class="column" data-status="in_progress">
+      <h2 class="col-header">In Progress</h2>
+      <div id="col-inprogress" class="col-list"></div>
+    </div>
+
+    <div class="column" data-status="completed">
+      <h2 class="col-header">Completed</h2>
+      <div id="col-completed" class="col-list"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
